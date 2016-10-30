@@ -109,12 +109,12 @@ static inline bool gid_lte(kgid_t left, kgid_t right)
 
 static inline bool uid_valid(kuid_t uid)
 {
-	return !uid_eq(uid, INVALID_UID);
+	return __kuid_val(uid) != (uid_t) -1;
 }
 
 static inline bool gid_valid(kgid_t gid)
 {
-	return !gid_eq(gid, INVALID_GID);
+	return __kgid_val(gid) != (gid_t) -1;
 }
 
 #ifdef CONFIG_USER_NS
@@ -177,12 +177,12 @@ static inline gid_t from_kgid_munged(struct user_namespace *to, kgid_t kgid)
 
 static inline bool kuid_has_mapping(struct user_namespace *ns, kuid_t uid)
 {
-	return true;
+	return uid_valid(uid);
 }
 
 static inline bool kgid_has_mapping(struct user_namespace *ns, kgid_t gid)
 {
-	return true;
+	return gid_valid(gid);
 }
 
 #endif /* CONFIG_USER_NS */

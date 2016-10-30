@@ -13,6 +13,7 @@
 #include <linux/linkage.h>
 #include <asm/assembler.h>
 #include <asm/unwind.h>
+#include <asm/export.h>
 
 #define LDR1W_SHIFT	0
 #define STR1W_SHIFT	0
@@ -61,8 +62,12 @@
 
 /* Prototype: void *memcpy(void *dest, const void *src, size_t n); */
 
+ENTRY(mmiocpy)
 ENTRY(memcpy)
 
 #include "copy_template.S"
 
 ENDPROC(memcpy)
+ENDPROC(mmiocpy)
+EXPORT_SYMBOL(memcpy)
+EXPORT_SYMBOL(mmiocpy)

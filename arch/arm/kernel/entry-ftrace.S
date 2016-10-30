@@ -7,6 +7,7 @@
 #include <asm/assembler.h>
 #include <asm/ftrace.h>
 #include <asm/unwind.h>
+#include <asm/export.h>
 
 #include "entry-header.S"
 
@@ -87,7 +88,7 @@
 
 1: 	mcount_get_lr	r1			@ lr of instrumented func
 	mcount_adjust_addr	r0, lr		@ instrumented function
-	adr	lr, BSYM(2f)
+	badr	lr, 2f
 	mov	pc, r2
 2:	mcount_exit
 .endm
@@ -153,6 +154,7 @@ ENTRY(mcount)
 	__mcount _old
 #endif
 ENDPROC(mcount)
+EXPORT_SYMBOL(mcount)
 
 #ifdef CONFIG_DYNAMIC_FTRACE
 ENTRY(ftrace_caller_old)
@@ -205,6 +207,7 @@ UNWIND(.fnstart)
 #endif
 UNWIND(.fnend)
 ENDPROC(__gnu_mcount_nc)
+EXPORT_SYMBOL(__gnu_mcount_nc)
 
 #ifdef CONFIG_DYNAMIC_FTRACE
 ENTRY(ftrace_caller)

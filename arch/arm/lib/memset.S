@@ -12,10 +12,12 @@
 #include <linux/linkage.h>
 #include <asm/assembler.h>
 #include <asm/unwind.h>
+#include <asm/export.h>
 
 	.text
 	.align	5
 
+ENTRY(mmioset)
 ENTRY(memset)
 UNWIND( .fnstart         )
 	ands	r3, r0, #3		@ 1 unaligned?
@@ -133,3 +135,6 @@ UNWIND( .fnstart            )
 	b	1b
 UNWIND( .fnend   )
 ENDPROC(memset)
+ENDPROC(mmioset)
+EXPORT_SYMBOL(memset)
+EXPORT_SYMBOL(mmioset)
