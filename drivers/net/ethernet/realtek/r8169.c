@@ -6679,7 +6679,16 @@ static void rtl_hw_start_8106(struct rtl8169_private *tp)
 	/* Force LAN exit from ASPM if Rx/Tx are not idle */
 	RTL_W32(FuncEvent, RTL_R32(FuncEvent) | 0x002800);
 
-	RTL_W32(MISC, (RTL_R32(MISC) | DISABLE_LAN_EN) & ~EARLY_TALLY_EN);
+	if (use_aspm) {
+		RTL_W32(MISC, (RTL_R32(MISC) | DISABLE_LAN_EN | FORCE_CLK) &
+			~EARLY_TALLY_EN);
+		RTL_W8(Config5, RTL_R8(Config5) | ASPM_en);
+		RTL_W8(Config2, RTL_R8(Config2) | ClkReqEn);
+	} else {
+		RTL_W32(MISC, (RTL_R32(MISC) | DISABLE_LAN_EN) &
+			~EARLY_TALLY_EN);
+	}
+
 	RTL_W8(MCU, RTL_R8(MCU) | EN_NDP | EN_OOB_RESET);
 	RTL_W8(DLLPR, RTL_R8(DLLPR) & ~PFM_EN);
 

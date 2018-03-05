@@ -474,7 +474,6 @@ void acpi_os_unmap_generic_address(struct acpi_generic_address *gas)
 }
 EXPORT_SYMBOL(acpi_os_unmap_generic_address);
 
-#ifdef ACPI_FUTURE_USAGE
 acpi_status
 acpi_os_get_physical_address(void *virt, acpi_physical_address * phys)
 {
@@ -485,7 +484,7 @@ acpi_os_get_physical_address(void *virt, acpi_physical_address * phys)
 
 	return AE_OK;
 }
-#endif
+EXPORT_SYMBOL(acpi_os_get_physical_address);
 
 #ifdef CONFIG_ACPI_REV_OVERRIDE_POSSIBLE
 static bool acpi_rev_override;
