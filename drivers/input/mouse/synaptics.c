@@ -173,6 +173,7 @@ static const char * const smbus_pnp_ids[] = {
 	"LEN0046", /* X250 */
 	"LEN004a", /* W541 */
 	"LEN200f", /* T450s */
+	"LEN2018", /* T460p */
 	NULL
 };
 
@@ -1709,8 +1710,7 @@ static int synaptics_create_intertouch(struct psmouse *psmouse,
 		.sensor_pdata = {
 			.sensor_type = rmi_sensor_touchpad,
 			.axis_align.flip_y = true,
-			/* to prevent cursors jumps: */
-			.kernel_tracking = true,
+			.kernel_tracking = false,
 			.topbuttonpad = topbuttonpad,
 		},
 		.f30_data = {
